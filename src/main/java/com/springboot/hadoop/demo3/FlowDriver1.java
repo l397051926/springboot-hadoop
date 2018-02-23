@@ -1,5 +1,6 @@
 package com.springboot.hadoop.demo3;
 
+import com.springboot.hadoop.flowDemo1.Flow2Patitioner;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.NullWritable;
@@ -13,7 +14,7 @@ import java.io.IOException;
 public class FlowDriver1 {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
         Configuration configuration=new Configuration();
-        Job job= Job.getInstance(configuration,"FLOWJOB2");
+        Job job= Job.getInstance(configuration,"FLOWJOB3");
 
         job.setJarByClass(FlowDriver1.class);
         job.setMapperClass(FlowMap1.class);
@@ -25,8 +26,10 @@ public class FlowDriver1 {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(NullWritable.class);
 
-        FileInputFormat.setInputPaths(job,new Path("hdfs://192.168.187.21:9000/data/flow"));
-        FileOutputFormat.setOutputPath(job,new Path("hdfs://192.168.187.21:9000/data/flow/result"));
+        job.setPartitionerClass(Flow2Patitioner.class);
+
+        FileInputFormat.setInputPaths(job,new Path("hdfs://192.168.187.21:9000/data/flow1"));
+        FileOutputFormat.setOutputPath(job,new Path("hdfs://192.168.187.21:9000/data/flow1/result"));
 
         job.waitForCompletion(true);
 
