@@ -32,6 +32,9 @@ public class ProfitDriver {
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
 
+//        job.setCombinerClass();
+//        job.setPartitionerClass();
+
         FileInputFormat.setInputPaths(job,new Path("hdfs://192.168.187.21:9000/data/profit"));
         FileOutputFormat.setOutputPath(job,new Path("hdfs://192.168.187.21:9000/data/profit/result"));
 
